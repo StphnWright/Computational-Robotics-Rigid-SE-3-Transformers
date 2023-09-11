@@ -1,0 +1,500 @@
+% template.tex
+% COMS 4733 course staff, Columbia University
+% (c) 2020
+
+\documentclass[12pt,letterpaper]{article}
+\usepackage[fleqn]{amsmath}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amscd}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+\usepackage{framed}
+\usepackage{mdframed}
+\usepackage{listings}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[letterpaper,voffset=-.5in,bmargin=3cm,footskip=1cm]{geometry}
+\usepackage[colorlinks = true]{hyperref} 
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+\allowdisplaybreaks
+\headheight 15pt
+\headsep 10pt
+\newcommand\N{\mathbb N}
+\newcommand\Z{\mathbb Z}
+\newcommand\R{\mathbb R}
+\newcommand\Q{\mathbb Q}
+\newcommand\lcm{\operatorname{lcm}}
+\newcommand\setbuilder[2]{\ensuremath{\left\{#1\;\middle|\;#2\right\}}}
+\newcommand\E{\operatorname{E}}
+\newcommand\V{\operatorname{V}}
+\newcommand\Pow{\ensuremath{\operatorname{\mathcal{P}}}}
+
+\newcommand{\rca}{\cos\alpha} \newcommand{\rcb}{\cos\beta} \newcommand{\rcg}{\cos\gamma}
+\newcommand{\rsa}{\sin\alpha} \newcommand{\rsb}{\sin\beta} \newcommand{\rsg}{\sin\gamma}
+\newcommand{\degsym}{\ensuremath{^{\circ}}}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand\hint[1]{\textbf{Hint}: #1}
+\newcommand\note[1]{\textbf{Note}: #1}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}},
+}
+
+\fancypagestyle{firstpagestyle} {
+  \renewcommand{\headrulewidth}{0pt}
+  \lhead{\textbf{COMS 4733}}
+  \chead{\textbf{Stephen V. Wright}}
+  \rhead{SVW2112}
+}
+
+\pagestyle{fancyplain}
+\usepackage{tikz}
+\hbadness=10000
+\begin{document}
+  \thispagestyle{firstpagestyle}
+  \begin{center}
+    {\huge \textbf{Homework 0}}
+  \end{center}
+
+
+    No special notes to consider for grading.
+    
+    
+
+\subsection*{Problem 1}
+
+\begin{enumerate}[leftmargin=*]
+\item Answer: $B$ and $D$ belong to the $SE(3)$ group of valid transforms, but $A$ and $C$ do \textit{not} belong to $SE(3)$ group of valid transforms. See the following justifications for each matrix.\\
+
+\textbf{Matrix A}\\
+$A$ does not have the form $\begin{bmatrix} R & r \\ 0 & 1 \end{bmatrix}$ where $R \in {\R}^{3x3}$, $r \in {\R}^3$. Therefore, $A \notin SE(3)$.\\
+
+The remaining matrices $B$, $C$, and $D$ do have the required form above.\\
+
+\textbf{Matrix B}\\
+
+$R = \begin{bmatrix} 1 & 0 & 0\\ 0 & 0 & -1\\ 0 & 1 & 0\\ \end{bmatrix}$\\
+
+$\det(R) = (1) \det \begin{bmatrix} 0 & -1\\ 1 & 0\\ \end{bmatrix} = 0(0)-1(-1) = 1$\\
+
+$R^{T} R = 
+\begin{bmatrix} 1 & 0 & 0\\ 0 & 0 & 1\\ 0 & -1 & 0\\ \end{bmatrix} 
+\begin{bmatrix} 1 & 0 & 0\\ 0 & 0 & -1\\ 0 & 1 & 0\\ \end{bmatrix}  
+= \begin{bmatrix} 1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1\\ \end{bmatrix} 
+= I$\\
+
+$R R^{T} = 
+\begin{bmatrix} 1 & 0 & 0\\ 0 & 0 & -1\\ 0 & 1 & 0\\ \end{bmatrix} 
+\begin{bmatrix} 1 & 0 & 0\\ 0 & 0 & 1\\ 0 & -1 & 0\\ \end{bmatrix}
+= \begin{bmatrix} 1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1\\ \end{bmatrix}
+=I$\\
+
+Therefore, $B \in SE(3)$.\\
+
+\textbf{Matrix C}\\
+
+$R = \begin{bmatrix} 1 & 0 & 0\\ 0 & 0 & -1\\ 0 & -1 & 0\\ \end{bmatrix}$\\
+
+$\det(R) = (1) \det \begin{bmatrix} 0 & -1\\ -1 & 0\\ \end{bmatrix} = 0(0)-(-1)(-1) = -1 \neq 1$\\
+
+Therefore, $C \notin SE(3)$.\\
+
+\textbf{Matrix D}\\
+
+$R = \begin{bmatrix} -1 & 0 & 0\\ 0 & 0 & 1\\ 0 & 1 & 0\\ \end{bmatrix}$\\
+
+$\det(R) = (-1) \det \begin{bmatrix} 0 & 1\\ 1 & 0\\ \end{bmatrix} = -(0(0)-1(1)) = 1$\\
+
+$R^{T} R = 
+\begin{bmatrix} -1 & 0 & 0\\ 0 & 0 & 1\\ 0 & 1 & 0\\ \end{bmatrix} 
+\begin{bmatrix} -1 & 0 & 0\\ 0 & 0 & 1\\ 0 & 1 & 0\\ \end{bmatrix}  
+= \begin{bmatrix} 1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1\\ \end{bmatrix} 
+= I$\\
+
+$R R^{T} = 
+\begin{bmatrix} 1 & 0 & 0\\ 0 & 0 & -1\\ 0 & 1 & 0\\ \end{bmatrix} 
+\begin{bmatrix} -1 & 0 & 0\\ 0 & 0 & 1\\ 0 & 1 & 0\\ \end{bmatrix}
+= \begin{bmatrix} 1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1\\ \end{bmatrix}
+=I$\\
+
+Therefore, $D \in SE(3)$.\\
+
+\item $SE(3) \cap \{ A, B, C, D \} = \{ B, D \} $\\
+
+\textbf{Matrix B}
+
+\vspace{-2em}
+\begin{equation*}
+\hspace{-2.5em}\begin{split}
+[B | I] 
+& = \begin{bmatrix}[cccc|cccc]
+1 & 0 & 0  & 1 & 1 & 0 & 0 & 0\\
+0 & 0 & -1 & 3 & 0 & 1 & 0 & 0\\
+0 & 1 & 0  & 5 & 0 & 0 & 1 & 0\\
+0 & 0 & 0  & 1 & 0 & 0 & 0 & 1\\
+\end{bmatrix} R_2 \leftrightarrow -R_3 &\\
+& = \begin{bmatrix}[cccc|cccc]
+1 & 0 & 0 & 1  & 1 & 0  & 0 & 0\\
+0 & 1 & 0 & 5  & 0 & 0  & 1 & 0\\
+0 & 0 & 1 & -3 & 0 & -1 & 1 & 0\\
+0 & 0 & 0 & 1  & 0 & 0  & 0 & 1\\
+\end{bmatrix} \begin{aligned} R_1 \rightarrow R_1 - R_4 \\ R_2 \rightarrow R_2 - 5 R_4 \\ R_3 \rightarrow R_3 + 3 R_4 \end{aligned} &\\
+& = \begin{bmatrix}[cccc|cccc]
+1 & 0 & 0 & 0 & 1 & 0  & 0 & -1\\
+0 & 1 & 0 & 0 & 0 & 0  & 1 & -5\\
+0 & 0 & 1 & 0 & 0 & -1 & 0 &  3\\
+0 & 0 & 0 & 1 & 0 & 0  & 0 &  1\\
+\end{bmatrix} = [I | B^{-1}] 
+\end{split}
+\end{equation*}
+
+$\Rightarrow B^{-1} = \begin{bmatrix}
+1 & 0  & 0 & -1\\
+0 & 0  & 1 & -5\\
+0 & -1 & 0 &  3\\
+0 & 0  & 0 &  1\\
+\end{bmatrix}$
+
+$B^{-1} B = 
+\begin{bmatrix}
+1 & 0  & 0 & -1\\
+0 & 0  & 1 & -5\\
+0 & -1 & 0 &  3\\
+0 & 0  & 0 &  1\\
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0  &  0 & 1\\
+0 & 0  & -1 & 3\\
+0 & 1 &  0 & 5\\
+0 & 0  &  0 & 1\\
+\end{bmatrix}
+= \begin{bmatrix} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1\\ \end{bmatrix} 
+= I$\\
+
+$B B^{-1} = 
+\begin{bmatrix}
+1 & 0  &  0 & 1\\
+0 & 0  & -1 & 3\\
+0 & 1 &  0 & 5\\
+0 & 0  &  0 & 1\\
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0  & 0 & -1\\
+0 & 0  & 1 & -5\\
+0 & -1 & 0 &  3\\
+0 & 0  & 0 &  1\\
+\end{bmatrix}
+= \begin{bmatrix} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1\\ \end{bmatrix} 
+= I$\\
+
+\textbf{Matrix D}
+
+\vspace{-2em}
+\begin{equation*}
+\hspace{-2.5em}\begin{split}
+[D | I] 
+& = \begin{bmatrix}[cccc|cccc]
+-1 & 0 & 0 & 1 & 1 & 0 & 0 & 0\\
+ 0 & 0 & 1 & 3 & 0 & 1 & 0 & 0\\
+ 0 & 1 & 0 & 5 & 0 & 0 & 1 & 0\\
+ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1\\
+\end{bmatrix} \begin{aligned} R_1 \rightarrow -R_1 \\ R_2 \leftrightarrow R_3 \end{aligned} &\\
+& = \begin{bmatrix}[cccc|cccc]
+1 & 0 & 0 & -1 & -1 & 0 & 0 & 0\\
+0 & 1 & 0 &  5 &  0 & 0 & 1 & 0\\
+0 & 0 & 1 &  3 &  0 & 1 & 0 & 0\\
+0 & 0 & 0 &  1 &  0 & 0 & 0 & 1\\
+\end{bmatrix} \begin{aligned} R_1 \rightarrow R_1 + R_4 \\ R_2 \rightarrow R_2 - 5 R_4 \\ R_3 \rightarrow R_3 - 3 R_4 \end{aligned} &\\
+& = \begin{bmatrix}[cccc|cccc]
+1 & 0 & 0 & 0 & -1 & 0 & 0 &  1\\
+0 & 1 & 0 & 0 &  0 & 0 & 1 & -5\\
+0 & 0 & 1 & 0 &  0 & 1 & 0 & -3\\
+0 & 0 & 0 & 1 &  0 & 0 & 0 &  1\\
+\end{bmatrix} = [I | D^{-1}] 
+\end{split}
+\end{equation*}
+
+$\Rightarrow D^{-1} = \begin{bmatrix}
+-1 & 0 & 0 &  1\\
+ 0 & 0 & 1 & -5\\
+ 0 & 1 & 0 & -3\\
+ 0 & 0 & 0 &  1\\
+\end{bmatrix}$
+
+$D^{-1} D = 
+\begin{bmatrix}
+-1 & 0 & 0 &  1\\
+ 0 & 0 & 1 & -5\\
+ 0 & 1 & 0 & -3\\
+ 0 & 0 & 0 &  1\\
+\end{bmatrix}
+\begin{bmatrix}
+-1 & 0 & 0 & 1\\
+ 0 & 0 & 1 & 3\\
+ 0 & 1 & 0 & 5\\
+ 0 & 0 & 0 & 1\\
+\end{bmatrix}
+= \begin{bmatrix} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1\\ \end{bmatrix} 
+= I$\\
+
+$D D^{-1} = 
+\begin{bmatrix}
+-1 & 0 & 0 & 1\\
+ 0 & 0 & 1 & 3\\
+ 0 & 1 & 0 & 5\\
+ 0 & 0 & 0 & 1\\
+\end{bmatrix}
+\begin{bmatrix}
+-1 & 0 & 0 &  1\\
+ 0 & 0 & 1 & -5\\
+ 0 & 1 & 0 & -3\\
+ 0 & 0 & 0 &  1\\
+\end{bmatrix}
+= \begin{bmatrix} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1\\ \end{bmatrix} 
+= I$\\
+
+\end{enumerate}
+
+\subsection*{Problem 2}
+
+\begin{enumerate}
+\item 
+$
+\begin{bmatrix} ^{1}p \\ 1\end{bmatrix}
+= ^{1}T_2 \begin{bmatrix} ^{2}p \\ 1\end{bmatrix}
+= \begin{bmatrix}
+ 0 & 1 & 0 &   0\\
+-1 & 0 & 0 &  -3\\
+ 0 & 0 & 1 & -10\\
+ 0 & 0 & 0 &   1\\
+\end{bmatrix}
+\begin{bmatrix} 2 \\ 4 \\ 6 \\ 1\end{bmatrix}
+= \begin{bmatrix} -1(4) \\ -1(2) - 3(1) \\ 1(6) - 10(1) \\ 1(1) \end{bmatrix}
+= \begin{bmatrix} 4 \\ -5 \\ -4 \\ 1\end{bmatrix}
+$
+
+Thus $^{1}p = \begin{bmatrix} 4 & -5 & -4\end{bmatrix}^T$.
+
+\item 
+$
+^{0}T_2 = ^{0}T_1 ^{1}T_2
+= \begin{bmatrix}
+-1 & 0 & 0 &  0\\
+ 0 & 0 & 1 & 10\\
+ 0 & 1 & 0 &  3\\
+ 0 & 0 & 0 &  1\\
+\end{bmatrix}
+\begin{bmatrix}
+ 0 & 1 & 0 &   0\\
+-1 & 0 & 0 &  -3\\
+ 0 & 0 & 1 & -10\\
+ 0 & 0 & 0 &   1\\
+\end{bmatrix}
+= \begin{bmatrix}
+ 0 & -1 & 0 & 0\\
+ 0 &  0 & 1 & 0\\
+-1 &  0 & 0 & 0\\
+ 0 &  0 & 0 & 1\\
+\end{bmatrix}
+$.\\
+Here $r = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}$, so there is no translation, and
+$
+R = \begin{bmatrix}
+ 0 & -1 & 0\\
+ 0 &  0 & 1\\
+-1 &  0 & 0\\
+\end{bmatrix}
+$.
+
+
+Match $R$ to the form
+\vspace{-.5em}
+\begin{equation*}
+\begin{bmatrix}
+\rca\rcb & \rca\rsb\rsg - \rsa\rcg & \rca\rsb\rsg + \rsa\rsg\\
+\rsa\rcb & \rsa\rsb\rsg + \rca\rcg & \rsa\rsb\rsg - \rca\rsg\\
+-\rsb & \rcb\rsg & \rcb\rsg \\
+\end{bmatrix}
+\end{equation*}
+
+From entry $(3, 1)$, $-\rsb = -1 \Rightarrow \beta = 90\degsym$
+
+Thus 
+$R = 
+\begin{bmatrix}
+0 & -\rca\rsg - \rsa\rcg & -\rca\rsg + \rsa\rsg\\
+0 & -\rsa\rsg + \rca\rcg & -\rsa\rsg - \rca\rsg\\
+1 & 0 & 0 \\
+\end{bmatrix}
+$
+
+Trying $\alpha = 90\degsym$ and $\gamma = 0$ matches the two matrices. Thus,  $\alpha = \beta = 90\degsym$ and $\gamma = 0$.\\
+
+Therefore, this transform consists of rotations of $90\degsym$ about the $y$-axis and $90\degsym$ about the $z$-axis.
+
+\end{enumerate}
+
+\subsection*{Problem 3}
+
+\begin{enumerate}
+
+\item
+
+\textbf{Pose $^{m}T_w$}\\
+The steps in intrinsic coordinates are:
+\begin{enumerate}
+\item Rotate $+90\degsym$ about the $x$-axis of frame $m$.\\
+Thus $\alpha = +90\degsym, \rsa = 1, \rcg = 0$ and 
+$R_1 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 0 & -1 \\ 0 & 1 & 0 \end{bmatrix}$.
+\item Rotate $-90\degsym$ about the $y$-axis of the previous frame.\\
+Thus $\beta = -90\degsym, \rsb = -1, \rcb = 0$ and 
+$R_2 = \begin{bmatrix} 0 & 0 & -1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix}$.
+\item In frame $m$, translate +4 in $x$ and +6 in $y$. Thus $r = \begin{bmatrix} 4 & 6 & 0 \end{bmatrix}^T$.
+\end{enumerate}
+Thus $R = R_1 R_2 = 
+\begin{bmatrix} 1 & 0 & 0 \\ 0 & 0 & -1 \\ 0 & 1 & 0 \end{bmatrix}
+\begin{bmatrix} 0 & 0 & -1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix}
+= \begin{bmatrix} 0 & 0 & -1 \\ -1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix}
+$ and \\
+\vspace{.5em}
+\begin{equation*}
+\hspace{-2em}
+^{m}T_w = \begin{bmatrix}
+ 0 & 0 & -1 & 4\\
+-1 & 0 &  0 & 6\\
+ 0 & 1 &  0 & 0\\
+ 0 & 0 &  0 & 1\\
+\end{bmatrix}.
+\end{equation*}
+\\
+\textbf{Pose $^{e}T_m$}\\
+The steps are:
+\begin{enumerate}
+\item Rotate $+90\degsym$ about the $y$-axis of frame $e$.\\
+Thus $\beta = +90\degsym, \rsb = 1, \rcb = 0$ and 
+$R = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ -1 & 0 & 0 \end{bmatrix}$.
+\item In frame $e$, translate -10 in $x$. Thus $r = \begin{bmatrix} -10 & 0 & 0 \end{bmatrix}^T$.
+\end{enumerate}
+Thus $^{e}T_m = \begin{bmatrix}
+ 0 & 0 & 1 & -10\\
+ 0 & 1 & 0 &   0\\
+-1 & 0 & 0 &   0\\
+ 0 & 0 & 0 &   1\\
+\end{bmatrix}$.
+\\
+\textbf{Pose $^{e}T_w$}\\
+The steps are:
+\begin{enumerate}
+\item Rotate $-90\degsym$ about the $z$-axis of frame $e$.\\
+Thus $\alpha = -90\degsym, \rsa = -1, \rca = 0$ and 
+$R = \begin{bmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}$.
+\item In frame $e$, translate -10 in $x$, +6 in $y$, and -4 in $z$. Thus $r = \begin{bmatrix} -10 & 6 & 4 \end{bmatrix}^T$.
+\end{enumerate}
+Thus $^{e}T_w = \begin{bmatrix}
+ 0 & 1 & 0 & -10\\
+-1 & 0 & 0 &   6\\
+ 0 & 0 & 1 &  -4\\
+ 0 & 0 & 0 &   1\\
+\end{bmatrix}$.
+
+\item
+$
+{^{e}T_m} {^{m}T_w}
+= \begin{bmatrix}
+ 0 & 0 & 1 & -10\\
+ 0 & 1 & 0 &   0\\
+-1 & 0 & 0 &   0\\
+ 0 & 0 & 0 &   1\\
+\end{bmatrix}
+\begin{bmatrix}
+ 0 & 0 & -1 & 4\\
+-1 & 0 &  0 & 6\\
+ 0 & 1 &  0 & 0\\
+ 0 & 0 &  0 & 1\\
+\end{bmatrix}
+= \begin{bmatrix}
+ 0 & 1 & 0 & -10\\
+-1 & 0 & 0 &   6\\
+ 0 & 0 & 1 &  -4\\
+ 0 & 0 & 0 &   1\\
+\end{bmatrix}
+= {^{e}T_w}
+$.\\
+\textbf{Pose $^{w}T_e$}\\
+The steps are:
+\begin{enumerate}
+\item Rotate $+90\degsym$ about the $z$-axis of frame $w$.\\
+Thus $\alpha = +90\degsym, \rsa = 1, \rca = 0$ and 
+$R = \begin{bmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}$.
+\item In frame $w$, translate +6 in $x$, +10 in $y$, and +4 in $z$.\\Thus $r = \begin{bmatrix} 6 & 10 & 4 \end{bmatrix}^T$.
+\end{enumerate}
+Thus $^{w}T_e = \begin{bmatrix}
+0 & -1 & 0 &  6\\
+1 &  0 & 0 & 10\\
+0 &  0 & 1 &  4\\
+0 &  0 & 0 &  1\\
+\end{bmatrix}$.
+
+${^{e}T_w} {^{w}T_e} = 
+\begin{bmatrix}
+ 0 & 1 & 0 & -10\\
+-1 & 0 & 0 &   6\\
+ 0 & 0 & 1 &  -4\\
+ 0 & 0 & 0 &   1\\
+\end{bmatrix}
+\begin{bmatrix}
+0 & -1 & 0 &  6\\
+1 &  0 & 0 & 10\\
+0 &  0 & 1 &  4\\
+0 &  0 & 0 &  1\\
+\end{bmatrix}
+= \begin{bmatrix} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1\\ \end{bmatrix} 
+= I$\\
+
+${^{w}T_e} {^{e}T_w} = 
+\begin{bmatrix}
+0 & -1 & 0 &  6\\
+1 &  0 & 0 & 10\\
+0 &  0 & 1 &  4\\
+0 &  0 & 0 &  1\\
+\end{bmatrix}
+\begin{bmatrix}
+ 0 & 1 & 0 & -10\\
+-1 & 0 & 0 &   6\\
+ 0 & 0 & 1 &  -4\\
+ 0 & 0 & 0 &   1\\
+\end{bmatrix}
+= \begin{bmatrix} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1\\ \end{bmatrix} 
+= I$\\
+
+By the definition of the matrix inverse, if $AB = BA = I$ for two square matrices $A$ and $B$, then $A$ and $B$ are inverses of each other, i.e., $B = A^{-1}$ and $A = B^{-1}$.\\
+
+Given that ${^{e}T_w} {^{w}T_e} = {^{w}T_e} {^{e}T_w} = I$, it follows that ${^{e}T_w} = ({^{w}T_e})^{-1}$.
+
+\end{enumerate}
+
+\subsection*{Problem 4}
+
+No additional comments.
+
+\end{document}
